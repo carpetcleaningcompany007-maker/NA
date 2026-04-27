@@ -1,166 +1,48 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Recovery Companion Premium</title>
-  <meta name="description" content="Recovery Companion: goals, meetings, online fallback, check ins, badges, crisis mode and weekly planning.">
-  <link rel="manifest" href="manifest.json">
-  <link rel="stylesheet" href="styles.css">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Recovery Companion</title>
+<link rel="stylesheet" href="styles.css"><link rel="manifest" href="manifest.json">
 </head>
 <body>
 <header class="hero">
-  <nav>
-    <div class="brand"><span>RC</span><b>Recovery Companion</b></div>
-    <div class="navlinks">
-      <a href="#today">Today</a>
-      <a href="#goals">Goals</a>
-      <a href="#meetings">Meetings</a>
-      <a href="#support">Support</a>
-    </div>
-  </nav>
-  <section class="hero-inner">
-    <p class="chip">One day at a time</p>
-    <h1>Show up today. That is the win.</h1>
-    <p>A private phone friendly companion for meetings, goals, streaks, rewards, online backup and support when things feel hard.</p>
-    <div class="actions">
-      <a class="btn primary" href="#today">Check in</a>
-      <a class="btn light" href="#meetings">Find meeting</a>
-      <button class="btn danger" onclick="openCrisis()">I’m struggling</button>
-    </div>
-  </section>
+  <div class="nav"><div class="brand"><span>RC</span><b>Recovery Companion</b></div><a href="#crisis">Need help?</a></div>
+  <div class="hero-inner"><p class="chip">NA • AA • Online meetings</p><h1>Show up today. That is the win.</h1><p>A private phone friendly recovery companion for meetings, goals, streaks, badges, online backup and support.</p><div class="actions"><a class="btn primary" href="#today">Check in</a><a class="btn light" href="#meetings">Find a meeting</a></div></div>
 </header>
-
 <main>
-  <section class="stats">
-    <div><strong id="totalMeetings">0</strong><span>Total meetings</span></div>
-    <div><strong id="weekMeetings">0</strong><span>This week</span></div>
-    <div><strong id="streakCount">0</strong><span>Day streak</span></div>
-    <div><strong id="level">1</strong><span>Level</span></div>
-  </section>
+<section class="stats"><div><strong id="statTotal">0</strong><span>Total meetings</span></div><div><strong id="statWeek">0</strong><span>This week</span></div><div><strong id="statStreak">0</strong><span>Streak</span></div><div><strong id="statLevel">1</strong><span>Level</span></div></section>
 
-  <section id="today" class="card featured">
-    <p class="eyebrow">Today</p>
-    <h2>Daily check in</h2>
-    <p id="encouragement" class="bigline">Just one positive action today.</p>
+<section id="today" class="card featured">
+<p class="eyebrow">Today</p><h2>Daily check in</h2><p id="encouragement" class="bigline">Just one positive action today.</p>
+<div class="moods"><button data-mood="Good">🙂 Good</button><button data-mood="Struggling">😟 Struggling</button><button data-mood="Craving">⚡ Craving</button><button data-mood="Proud">💪 Proud</button></div>
+<textarea id="note" placeholder="Optional private note"></textarea>
+<div class="actions"><button id="btnPerson" class="btn primary">I attended in person</button><button id="btnOnline" class="btn purple">I attended online</button></div>
+<p id="todayMessage" class="message"></p></section>
 
-    <div class="moods">
-      <button data-mood="Good">🙂 Good</button>
-      <button data-mood="Struggling">😟 Struggling</button>
-      <button data-mood="Craving">⚡ Craving</button>
-      <button data-mood="Proud">💪 Proud</button>
-    </div>
+<section id="goals" class="card">
+<p class="eyebrow">Goals</p><h2>Weekly target</h2>
+<div class="goal-grid"><label>Meetings per week<select id="goalCount"><option>1</option><option>2</option><option selected>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>10</option><option>14</option></select></label><label class="check"><input id="allowMultiple" type="checkbox"> Allow more than one meeting per day</label><label class="check"><input id="countOnline" type="checkbox" checked> Count online meetings</label></div>
+<div class="progress-top"><span id="weeklyText">0 / 3 this week</span><span id="weeklyPercent">0%</span></div><div class="progress"><div id="weeklyBar"></div></div><div id="miniCalendar" class="calendar"></div>
+</section>
 
-    <textarea id="note" placeholder="Optional private note. How did today go?"></textarea>
+<section class="card"><p class="eyebrow">Rewards</p><h2>Badges and XP</h2><p id="xpText" class="muted"></p><div id="badges" class="badges"></div></section>
 
-    <div class="actions">
-      <button id="attendPerson" class="btn primary">I attended in person</button>
-      <button id="attendOnline" class="btn purple">I attended online</button>
-    </div>
+<section id="meetings" class="card">
+<p class="eyebrow">Meetings</p><h2>Find NA, AA or online meetings</h2><p class="muted">Always check official sources before travelling.</p>
+<div class="finder-grid"><a class="finder na" href="https://meetings.ukna.org/" target="_blank">UK NA Finder<span>Physical and online NA meetings</span></a><a class="finder aa" href="https://www.alcoholics-anonymous.org.uk/find-a-meeting/" target="_blank">AA Finder<span>Physical and online AA meetings</span></a><a class="finder online" href="https://meetings.ukna.org/meeting/search/online" target="_blank">NA Online<span>Backup if travelling is difficult</span></a></div>
+<div class="filters"><input id="searchBox" placeholder="Search town, day, postcode, NA, AA or online"><select id="dayFilter"><option value="">All days</option><option>Monday</option><option>Tuesday</option><option>Wednesday</option><option>Thursday</option><option>Friday</option><option>Saturday</option><option>Sunday</option><option>Every day</option></select><select id="typeFilter"><option value="">All types</option><option>NA</option><option>AA</option><option>Online</option></select></div>
+<div id="meetingList" class="meeting-list"></div></section>
 
-    <div id="todayResult" class="result"></div>
-  </section>
+<section id="plan" class="card"><p class="eyebrow">Plan</p><h2>My weekly meeting plan</h2>
+<div class="manual"><select id="manualType"><option>NA</option><option>AA</option><option>NA Online</option><option>AA Online</option></select><select id="manualDay"><option>Monday</option><option>Tuesday</option><option>Wednesday</option><option>Thursday</option><option>Friday</option><option>Saturday</option><option>Sunday</option></select><input id="manualTime" placeholder="Time"><input id="manualPlace" placeholder="Venue, town, postcode or online link"><button id="addManual" class="btn primary">Add to plan</button></div>
+<div id="weekPlan" class="week-plan"></div></section>
 
-  <section id="goals" class="card">
-    <p class="eyebrow">Goals</p>
-    <h2>Set your weekly target</h2>
-    <div class="goal-grid">
-      <label>Meetings per week
-        <select id="goalCount">
-          <option>1</option><option>2</option><option selected>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>10</option><option>14</option>
-        </select>
-      </label>
-      <label class="check"><input id="allowMultiple" type="checkbox"> Allow more than one meeting per day</label>
-      <label class="check"><input id="countOnline" type="checkbox" checked> Count online meetings</label>
-    </div>
-    <div class="progress-top"><span id="weeklyText">0 / 3 this week</span><span id="weeklyPercent">0%</span></div>
-    <div class="progress"><div id="weeklyBar"></div></div>
-    <div class="calendar" id="miniCalendar"></div>
-  </section>
-
-  <section class="card">
-    <p class="eyebrow">Rewards</p>
-    <h2>Badges and XP</h2>
-    <p id="xpText" class="muted"></p>
-    <div id="badges" class="badges"></div>
-  </section>
-
-  <section id="meetings" class="card">
-    <p class="eyebrow">Meetings</p>
-    <h2>Find NA, AA or online meetings</h2>
-    <p class="muted">Always check official sources before travelling. Online meetings count if that is what you can do today.</p>
-    <div class="finder-grid">
-      <a class="finder na" target="_blank" href="https://meetings.ukna.org/">UK NA Finder<span>Physical and online NA meetings</span></a>
-      <a class="finder aa" target="_blank" href="https://www.alcoholics-anonymous.org.uk/find-a-meeting/">AA Finder<span>Physical and online AA meetings</span></a>
-      <a class="finder online" target="_blank" href="https://meetings.ukna.org/meeting/search/online">NA Online<span>Quick backup option</span></a>
-    </div>
-
-    <div class="filters">
-      <input id="search" placeholder="Search town, day, postcode, online, NA or AA">
-      <select id="dayFilter"><option value="">All days</option><option>Monday</option><option>Tuesday</option><option>Wednesday</option><option>Thursday</option><option>Friday</option><option>Saturday</option><option>Sunday</option><option>Every day</option></select>
-      <select id="typeFilter"><option value="">All types</option><option>NA</option><option>AA</option><option>Online</option></select>
-    </div>
-    <div id="meetingList" class="meeting-list"></div>
-  </section>
-
-  <section class="card">
-    <p class="eyebrow">Plan</p>
-    <h2>My weekly meeting plan</h2>
-    <div class="manual">
-      <select id="manualType"><option>NA</option><option>AA</option><option>NA Online</option><option>AA Online</option></select>
-      <select id="manualDay"><option>Monday</option><option>Tuesday</option><option>Wednesday</option><option>Thursday</option><option>Friday</option><option>Saturday</option><option>Sunday</option></select>
-      <input id="manualTime" placeholder="Time">
-      <input id="manualPlace" placeholder="Venue, town, postcode or online link">
-      <button id="addManual" class="btn primary">Add</button>
-    </div>
-    <div id="weekPlan" class="week-plan"></div>
-  </section>
-
-  <section class="card">
-    <p class="eyebrow">Quick win</p>
-    <h2>Just pick one for me</h2>
-    <p class="muted">When choosing feels too much, press this. It will offer one option for today, with online as a backup.</p>
-    <button class="btn purple" id="quickPick">Show one option</button>
-    <div id="quickResult"></div>
-  </section>
-
-  <section class="card">
-    <p class="eyebrow">Journal</p>
-    <h2>Private reflection history</h2>
-    <div id="journalList" class="journal"></div>
-  </section>
-
-  <section id="steps" class="card">
-    <p class="eyebrow">12 steps</p>
-    <h2>Short recovery guide</h2>
-    <div id="stepsList" class="steps"></div>
-  </section>
-
-  <section id="support" class="card serenity">
-    <p class="eyebrow">Serenity prayer</p>
-    <h2>God, grant me the serenity to accept the things I cannot change, courage to change the things I can, and wisdom to know the difference.</h2>
-  </section>
-
-  <section class="card crisis-box" id="crisisBox">
-    <h2>I’m struggling</h2>
-    <p>You do not need to solve your whole life right now. Do the next right thing.</p>
-    <div class="actions">
-      <a class="btn purple" target="_blank" href="https://meetings.ukna.org/meeting/search/online">Join an online NA meeting</a>
-      <a class="btn primary" target="_blank" href="https://meetings.ukna.org/">Find nearest NA meeting</a>
-      <a class="btn light" target="_blank" href="https://www.alcoholics-anonymous.org.uk/find-a-meeting/">Find AA meeting</a>
-    </div>
-    <p class="helpline">UK NA helpline: <b>0300 999 1212</b>. If someone is in immediate danger, call <b>999</b>.</p>
-  </section>
+<section class="card"><p class="eyebrow">Quick win</p><h2>Just pick one for me</h2><p class="muted">If choosing feels too much, press this. Online counts.</p><button id="quickPick" class="btn purple">Show one option</button><div id="quickResult"></div></section>
+<section class="card"><p class="eyebrow">Journal</p><h2>Private reflection history</h2><div id="journalList" class="journal"></div></section>
+<section class="card"><p class="eyebrow">12 steps</p><h2>Short recovery guide</h2><div id="stepsList" class="steps"></div></section>
+<section class="card serenity"><p class="eyebrow">Serenity prayer</p><h2>God, grant me the serenity to accept the things I cannot change, courage to change the things I can, and wisdom to know the difference.</h2></section>
+<section id="crisis" class="card crisis"><h2>I’m struggling</h2><p>You do not need to solve everything right now. Do the next right thing.</p><div class="actions"><a class="btn purple" href="https://meetings.ukna.org/meeting/search/online" target="_blank">Join online NA meeting</a><a class="btn primary" href="https://meetings.ukna.org/" target="_blank">Find NA meeting</a><a class="btn light" href="https://www.alcoholics-anonymous.org.uk/find-a-meeting/" target="_blank">Find AA meeting</a></div><p class="helpline">UK NA helpline: <b>0300 999 1212</b>. If someone is in immediate danger, call <b>999</b>.</p></section>
 </main>
-
-<nav class="bottom">
-  <a href="#today">Today</a>
-  <a href="#goals">Goals</a>
-  <a href="#meetings">Find</a>
-  <a href="#support">Help</a>
-</nav>
-
-<div id="toast"></div>
-<script src="app.js"></script>
-</body>
-</html>
+<nav class="bottom"><a href="#today">Today</a><a href="#goals">Goals</a><a href="#meetings">Find</a><a href="#plan">Plan</a></nav><div id="toast"></div><script src="app.js"></script>
+</body></html>

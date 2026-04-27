@@ -1,5 +1,5 @@
 {
-  "name": "Recovery Companion Premium",
+  "name": "Recovery Companion",
   "short_name": "Recovery",
   "start_url": "./index.html",
   "display": "standalone",
