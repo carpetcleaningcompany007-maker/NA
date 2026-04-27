@@ -26,3 +26,16 @@
 8. Use crisis mode if struggling.
 
 Everything saves privately in the browser using localStorage.
+
+
+## Recovery Library Added
+Includes:
+- Official AA Big Book link
+- Official AA 12 Steps and 12 Traditions link
+- Official NA literature link
+- Just for Today daily meditation link
+- Daily reflection card system
+- Simple reading tracker
+
+Note:
+This app links to official sources rather than copying copyrighted daily readings into the app.

@@ -23,7 +23,7 @@
 <header class="hero">
   <div class="nav">
     <div class="brand"><span>1</span><b>One Day at a Time</b></div>
-    <a href="#guide" class="top-help">How to use</a>
+    <a href="#library" class="top-help">Library</a>
   </div>
 
   <div class="hero-inner">
@@ -169,6 +169,64 @@
     <div id="journalList" class="journal"></div>
   </section>
 
+
+  <section id="library" class="card library-card">
+    <p class="eyebrow">Recovery library</p>
+    <h2>Read, listen, reflect</h2>
+    <p class="muted">A calm library for official recovery reading links, daily inspiration and reflection prompts. Use the links to check the latest official versions.</p>
+
+    <div class="library-grid">
+      <a class="library-tile blue" href="https://www.aa.org/the-big-book" target="_blank" rel="noopener">
+        <span class="book-icon">📘</span>
+        <b>AA Big Book</b>
+        <small>Official AA page with read, watch and listen options.</small>
+      </a>
+
+      <a class="library-tile green" href="https://www.aa.org/twelve-steps-twelve-traditions" target="_blank" rel="noopener">
+        <span class="book-icon">📗</span>
+        <b>AA 12 Steps and 12 Traditions</b>
+        <small>Official AA literature page.</small>
+      </a>
+
+      <a class="library-tile purple" href="https://www.na.org/?ID=ips-eng-index" target="_blank" rel="noopener">
+        <span class="book-icon">📙</span>
+        <b>NA Literature</b>
+        <small>Official NA recovery literature and information pamphlets.</small>
+      </a>
+
+      <a class="library-tile dark" href="https://jftna.org/" target="_blank" rel="noopener">
+        <span class="book-icon">🌅</span>
+        <b>Just for Today</b>
+        <small>Daily NA meditation link. Opens the current reading.</small>
+      </a>
+    </div>
+
+    <div class="daily-reading-panel">
+      <div>
+        <p class="eyebrow">Daily card</p>
+        <h3 id="libraryCardTitle">Today’s reflection</h3>
+        <p id="libraryCardText">Loading...</p>
+      </div>
+      <div class="library-actions">
+        <button id="newLibraryCard" class="btn primary" type="button">New reflection card</button>
+        <a class="btn light" href="https://jftna.org/" target="_blank" rel="noopener">Open Just for Today</a>
+      </div>
+    </div>
+
+    <div class="reading-plan">
+      <p class="eyebrow">Simple reading plan</p>
+      <h3>One small reading a day</h3>
+      <div class="reading-days">
+        <button type="button" data-read="Just for Today">Just for Today</button>
+        <button type="button" data-read="AA Big Book">AA Big Book</button>
+        <button type="button" data-read="NA Literature">NA Literature</button>
+        <button type="button" data-read="12 Steps">12 Steps</button>
+      </div>
+      <p id="readingSaved" class="message"></p>
+    </div>
+  </section>
+
+
   <section id="guide" class="card guide-card">
     <p class="eyebrow">How to use</p>
     <h2>Simple daily routine</h2>
@@ -208,7 +266,7 @@
 <nav class="bottom">
   <a href="#today">Today</a>
   <a href="#clean">Clean</a>
-  <a href="#trophies">Trophies</a>
+  <a href="#library">Library</a>
   <a href="#plan">Plan</a>
 </nav>
 

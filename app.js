@@ -480,5 +480,50 @@ document.addEventListener("DOMContentLoaded", function () {
     save();
   });
 
+
+  const libraryCards = [
+    {title:"Just for today", text:"Focus only on the next right action. You do not need to solve the whole future today."},
+    {title:"One page is enough", text:"Read one small section. Let one idea stay with you for the day."},
+    {title:"Meeting first", text:"When the mind is noisy, do not debate it alone. Get to a meeting, in person or online."},
+    {title:"Keep it simple", text:"Today’s job is simple: stay clean, connect, and do the next honest thing."},
+    {title:"Progress, not pressure", text:"This app is not here to judge. It is here to help you come back to today."},
+    {title:"A quiet win", text:"Every clean day is a quiet win. Every meeting is another vote for the life you want."}
+  ];
+
+  function renderLibraryCard() {
+    const saved = Number(localStorage.getItem("library_card_index") || "0");
+    const card = libraryCards[saved % libraryCards.length];
+    const title = document.getElementById("libraryCardTitle");
+    const text = document.getElementById("libraryCardText");
+    if (title && text) {
+      title.textContent = card.title;
+      text.textContent = card.text;
+    }
+  }
+
+  const newLibraryCard = document.getElementById("newLibraryCard");
+  if (newLibraryCard) {
+    newLibraryCard.addEventListener("click", function () {
+      const current = Number(localStorage.getItem("library_card_index") || "0");
+      localStorage.setItem("library_card_index", String(current + 1));
+      renderLibraryCard();
+    });
+  }
+
+  document.querySelectorAll("[data-read]").forEach(function(btn) {
+    const key = "read_" + btn.dataset.read;
+    if (localStorage.getItem(key) === new Date().toISOString().slice(0,10)) {
+      btn.classList.add("done");
+    }
+    btn.addEventListener("click", function () {
+      localStorage.setItem(key, new Date().toISOString().slice(0,10));
+      btn.classList.add("done");
+      const saved = document.getElementById("readingSaved");
+      if (saved) saved.textContent = btn.dataset.read + " marked as read today.";
+    });
+  });
+
+  renderLibraryCard();
+
   render();
 });
