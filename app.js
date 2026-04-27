@@ -51,25 +51,44 @@ document.addEventListener("DOMContentLoaded", function () {
     ["100 meetings",100,"Outstanding consistency."]
   ];
 
+  const cleanMilestones = [
+    [1, "Day one. Keep going."],
+    [7, "One week clean and serene."],
+    [30, "30 days clean and serene."],
+    [60, "60 days clean and serene."],
+    [90, "90 days clean and serene."],
+    [180, "6 months clean and serene."],
+    [365, "1 year clean and serene."]
+  ];
+
   let state = loadState();
 
   function byId(id){ return document.getElementById(id); }
 
   function loadState() {
     try {
-      const raw = localStorage.getItem("recovery_companion_celebration");
+      const raw = localStorage.getItem("recovery_companion_clean_serene");
       if (raw) return JSON.parse(raw);
     } catch(e) {}
-    return {attended:[], plan:[], goal:3, allowMultiple:false, countOnline:true, mood:"", earnedBadges:[], dailyCardIndex:0};
+    return {attended:[], plan:[], goal:3, allowMultiple:false, countOnline:true, mood:"", earnedBadges:[], dailyCardIndex:0, cleanDate:"", cleanMilestonesShown:[]};
   }
 
   function save() {
-    localStorage.setItem("recovery_companion_celebration", JSON.stringify(state));
+    localStorage.setItem("recovery_companion_clean_serene", JSON.stringify(state));
     render();
   }
 
   function todayKey() {
     return new Date().toISOString().slice(0,10);
+  }
+
+  function cleanDays() {
+    if (!state.cleanDate) return 0;
+    const start = new Date(state.cleanDate + "T00:00:00");
+    const now = new Date();
+    const diff = now - start;
+    if (diff < 0) return 0;
+    return Math.floor(diff / (1000 * 60 * 60 * 24));
   }
 
   function showToast(text) {
@@ -87,7 +106,6 @@ document.addEventListener("DOMContentLoaded", function () {
       p.style.left = Math.random() * 100 + "vw";
       p.style.background = colours[Math.floor(Math.random() * colours.length)];
       p.style.animationDelay = Math.random() * 0.35 + "s";
-      p.style.transform = "rotate(" + (Math.random() * 360) + "deg)";
       document.body.appendChild(p);
       setTimeout(() => p.remove(), 2400);
     }
@@ -148,6 +166,18 @@ document.addEventListener("DOMContentLoaded", function () {
     return "Good start. Keep going.";
   }
 
+  function checkCleanMilestones() {
+    const days = cleanDays();
+    cleanMilestones.forEach(function(m){
+      const target = m[0], text = m[1];
+      const key = "clean_" + target;
+      if (days >= target && !state.cleanMilestonesShown.includes(key)) {
+        state.cleanMilestonesShown.push(key);
+        setTimeout(function(){ showCelebration(text, "Clean and serene for " + days + " days."); }, 200);
+      }
+    });
+  }
+
   function checkNewBadges(beforeCount) {
     const afterCount = state.attended.length;
     badgeDef.forEach(function(b){
@@ -198,6 +228,28 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   window.removeFromPlan = removeFromPlan;
+
+  function renderCleanSerene() {
+    byId("cleanDate").value = state.cleanDate || "";
+    const days = cleanDays();
+
+    if (!state.cleanDate) {
+      byId("cleanText").textContent = "Set your clean date";
+      byId("cleanMilestone").textContent = "";
+      return;
+    }
+
+    byId("cleanText").textContent = "Clean and serene for " + days + " day" + (days === 1 ? "" : "s");
+
+    let msg = "Every day counts.";
+    for (let i = cleanMilestones.length - 1; i >= 0; i--) {
+      if (days >= cleanMilestones[i][0]) {
+        msg = cleanMilestones[i][1];
+        break;
+      }
+    }
+    byId("cleanMilestone").textContent = msg;
+  }
 
   function renderMeetings() {
     const list = byId("meetingList");
@@ -307,6 +359,8 @@ document.addEventListener("DOMContentLoaded", function () {
     byId("stepsList").innerHTML = steps.map((s, i) => '<div class="step"><b>Step ' + (i+1) + '</b><p>' + escapeHtml(s) + '</p></div>').join("");
     byId("dailyCard").textContent = recoveryCards[state.dailyCardIndex % recoveryCards.length];
 
+    renderCleanSerene();
+    checkCleanMilestones();
     renderNextBadge();
     renderCalendar();
     renderPlan();
@@ -322,6 +376,12 @@ document.addEventListener("DOMContentLoaded", function () {
       .replaceAll('"', "&quot;")
       .replaceAll("'", "&#039;");
   }
+
+  byId("cleanDate").addEventListener("change", () => {
+    state.cleanDate = byId("cleanDate").value;
+    state.cleanMilestonesShown = [];
+    save();
+  });
 
   byId("btnPerson").addEventListener("click", () => markAttendance("In person"));
   byId("btnOnline").addEventListener("click", () => markAttendance("Online"));
