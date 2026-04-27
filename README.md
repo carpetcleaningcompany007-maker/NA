@@ -1,9 +1,28 @@
-# Recovery Companion Clean and Serene Upgrade
+# One Day at a Time Recovery Companion
 
-Added:
+## What is included
 - Clean and serene day counter
-- Life changing decision date field
-- Calm clean-time display
-- Milestone messages
-- Subtle glow
-- Milestone celebrations
+- Trophy cabinet
+- Day 1, 1 week, 1 month, 2 months, 3 months, 4 months, 5 months, 6 months, 7 months, 8 months, 9 months, 10 months, 11 months, 12 months
+- Meeting trophies
+- Weekly meeting goal
+- In person and online meeting check ins
+- NA and AA official finder links
+- Weekly plan builder
+- Private journal
+- Daily recovery cards
+- Crisis support section
+- How to use guide
+- Confetti milestone celebrations
+
+## How to use
+1. Open index.html or upload the files to GitHub Pages.
+2. Set the clean date.
+3. Set the weekly meeting target.
+4. Use the NA or AA finder links to choose meetings.
+5. Add chosen meetings to the weekly plan.
+6. After a meeting, tap in person or online.
+7. Use the trophy cabinet to see progress.
+8. Use crisis mode if struggling.
+
+Everything saves privately in the browser using localStorage.

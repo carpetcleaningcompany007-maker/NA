@@ -37,28 +37,37 @@ document.addEventListener("DOMContentLoaded", function () {
     "Online counts. Showing up counts. Trying counts.",
     "You are one decision away from a better evening.",
     "Call someone before the craving makes the decision for you.",
-    "Progress is built by small choices repeated."
+    "Progress is built by small choices repeated.",
+    "One day at a time is enough.",
+    "The goal is not perfect. The goal is present."
   ];
 
-  const badgeDef = [
+  const meetingBadges = [
     ["First meeting",1,"You showed up."],
     ["3 meetings",3,"Momentum started."],
-    ["One week",7,"A strong week."],
-    ["Two weeks",14,"Keep building."],
-    ["30 days",30,"Massive progress."],
-    ["60 days",60,"Real commitment."],
-    ["90 days",90,"Recovery warrior."],
+    ["7 meetings",7,"A strong start."],
+    ["14 meetings",14,"Keep building."],
+    ["30 meetings",30,"Massive progress."],
+    ["60 meetings",60,"Real commitment."],
+    ["90 meetings",90,"Recovery warrior."],
     ["100 meetings",100,"Outstanding consistency."]
   ];
 
-  const cleanMilestones = [
-    [1, "Day one. Keep going."],
-    [7, "One week clean and serene."],
-    [30, "30 days clean and serene."],
-    [60, "60 days clean and serene."],
-    [90, "90 days clean and serene."],
-    [180, "6 months clean and serene."],
-    [365, "1 year clean and serene."]
+  const cleanTrophies = [
+    ["Day 1",1,"One day at a time starts here."],
+    ["1 week",7,"One week clean and serene."],
+    ["1 month",30,"One month clean and serene."],
+    ["2 months",60,"Two months clean and serene."],
+    ["3 months",90,"Three months clean and serene."],
+    ["4 months",120,"Four months clean and serene."],
+    ["5 months",150,"Five months clean and serene."],
+    ["6 months",180,"Six months clean and serene."],
+    ["7 months",210,"Seven months clean and serene."],
+    ["8 months",240,"Eight months clean and serene."],
+    ["9 months",270,"Nine months clean and serene."],
+    ["10 months",300,"Ten months clean and serene."],
+    ["11 months",330,"Eleven months clean and serene."],
+    ["12 months",365,"One year clean and serene."]
   ];
 
   let state = loadState();
@@ -67,14 +76,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function loadState() {
     try {
-      const raw = localStorage.getItem("recovery_companion_clean_serene");
+      const raw = localStorage.getItem("recovery_companion_trophy");
       if (raw) return JSON.parse(raw);
     } catch(e) {}
     return {attended:[], plan:[], goal:3, allowMultiple:false, countOnline:true, mood:"", earnedBadges:[], dailyCardIndex:0, cleanDate:"", cleanMilestonesShown:[]};
   }
 
   function save() {
-    localStorage.setItem("recovery_companion_clean_serene", JSON.stringify(state));
+    localStorage.setItem("recovery_companion_trophy", JSON.stringify(state));
     render();
   }
 
@@ -100,7 +109,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function launchConfetti() {
     const colours = ["#2563eb","#7c3aed","#22c55e","#f59e0b","#ef4444","#06b6d4"];
-    for (let i = 0; i < 80; i++) {
+    for (let i = 0; i < 90; i++) {
       const p = document.createElement("div");
       p.className = "confetti-piece";
       p.style.left = Math.random() * 100 + "vw";
@@ -151,40 +160,40 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function xp() {
-    return state.attended.length * 10 + streakCount() * 5 + weeklyCount() * 5;
+    return state.attended.length * 10 + streakCount() * 5 + weeklyCount() * 5 + cleanDays();
   }
 
   function level() {
-    return Math.floor(xp() / 75) + 1;
+    return Math.floor(xp() / 100) + 1;
   }
 
   function encouragement() {
     const doneToday = state.attended.some(x => x.date === todayKey());
     if (!doneToday) return "Just one meeting today. In person or online both count.";
-    if (weeklyCount() >= state.goal) return "Weekly goal hit. That is real progress.";
+    if (weeklyCount() >= state.goal) return "Weekly goal hit. One day at a time.";
     if (streakCount() >= 7) return "Strong consistency. Keep building.";
     return "Good start. Keep going.";
   }
 
   function checkCleanMilestones() {
     const days = cleanDays();
-    cleanMilestones.forEach(function(m){
-      const target = m[0], text = m[1];
+    cleanTrophies.forEach(function(t){
+      const name = t[0], target = t[1], text = t[2];
       const key = "clean_" + target;
       if (days >= target && !state.cleanMilestonesShown.includes(key)) {
         state.cleanMilestonesShown.push(key);
-        setTimeout(function(){ showCelebration(text, "Clean and serene for " + days + " days."); }, 200);
+        setTimeout(function(){ showCelebration(name + " trophy unlocked", text); }, 200);
       }
     });
   }
 
   function checkNewBadges(beforeCount) {
     const afterCount = state.attended.length;
-    badgeDef.forEach(function(b){
+    meetingBadges.forEach(function(b){
       const badgeName = b[0], target = b[1], text = b[2];
       if (beforeCount < target && afterCount >= target && !state.earnedBadges.includes(badgeName)) {
         state.earnedBadges.push(badgeName);
-        setTimeout(function(){ showCelebration("Badge unlocked: " + badgeName, text); }, 150);
+        setTimeout(function(){ showCelebration("Meeting trophy unlocked: " + badgeName, text); }, 150);
       }
     });
 
@@ -242,13 +251,38 @@ document.addEventListener("DOMContentLoaded", function () {
     byId("cleanText").textContent = "Clean and serene for " + days + " day" + (days === 1 ? "" : "s");
 
     let msg = "Every day counts.";
-    for (let i = cleanMilestones.length - 1; i >= 0; i--) {
-      if (days >= cleanMilestones[i][0]) {
-        msg = cleanMilestones[i][1];
+    for (let i = cleanTrophies.length - 1; i >= 0; i--) {
+      if (days >= cleanTrophies[i][1]) {
+        msg = cleanTrophies[i][2];
         break;
       }
     }
     byId("cleanMilestone").textContent = msg;
+  }
+
+  function renderTrophyCabinet() {
+    const daysClean = cleanDays();
+    const totalMeetings = state.attended.length;
+
+    const cleanHtml = cleanTrophies.map(function(t){
+      const unlocked = daysClean >= t[1];
+      return '<div class="trophy ' + (unlocked ? 'unlocked' : 'locked') + '">' +
+        '<div class="trophy-icon">' + (unlocked ? '🏆' : '🔒') + '</div>' +
+        '<h3>' + escapeHtml(t[0]) + '</h3>' +
+        '<p>' + (unlocked ? escapeHtml(t[2]) : 'Unlocks at ' + t[1] + ' clean days') + '</p>' +
+      '</div>';
+    }).join("");
+
+    const meetingHtml = meetingBadges.map(function(b){
+      const unlocked = totalMeetings >= b[1];
+      return '<div class="trophy ' + (unlocked ? 'unlocked' : 'locked') + '">' +
+        '<div class="trophy-icon">' + (unlocked ? '🎖️' : '🔒') + '</div>' +
+        '<h3>' + escapeHtml(b[0]) + '</h3>' +
+        '<p>' + (unlocked ? escapeHtml(b[2]) : 'Unlocks at ' + b[1] + ' meetings') + '</p>' +
+      '</div>';
+    }).join("");
+
+    byId("trophyCabinet").innerHTML = cleanHtml + meetingHtml;
   }
 
   function renderMeetings() {
@@ -323,10 +357,17 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function renderNextBadge() {
-    const next = badgeDef.find(b => state.attended.length < b[1]);
-    byId("nextBadgeText").textContent = next
-      ? "Next badge: " + next[0] + " at " + next[1] + " meetings."
-      : "All main meeting badges unlocked. Keep building.";
+    const daysClean = cleanDays();
+    const nextClean = cleanTrophies.find(t => daysClean < t[1]);
+    const nextMeeting = meetingBadges.find(b => state.attended.length < b[1]);
+
+    if (nextClean) {
+      byId("nextBadgeText").textContent = "Next clean-time trophy: " + nextClean[0] + " at " + nextClean[1] + " clean days.";
+    } else if (nextMeeting) {
+      byId("nextBadgeText").textContent = "Next meeting trophy: " + nextMeeting[0] + " at " + nextMeeting[1] + " meetings.";
+    } else {
+      byId("nextBadgeText").textContent = "Main trophies unlocked. Keep building one day at a time.";
+    }
   }
 
   function render() {
@@ -338,29 +379,24 @@ document.addEventListener("DOMContentLoaded", function () {
       btn.classList.toggle("selected", btn.dataset.mood === state.mood);
     });
 
+    byId("statClean").textContent = cleanDays();
     byId("statTotal").textContent = state.attended.length;
     byId("statWeek").textContent = weeklyCount();
-    byId("statStreak").textContent = streakCount();
     byId("statLevel").textContent = level();
 
     byId("encouragement").textContent = encouragement();
-    byId("xpText").textContent = xp() + " XP • Level " + level() + " • " + state.attended.length + " meetings logged";
 
     const percent = Math.min(100, Math.round((weeklyCount() / state.goal) * 100));
     byId("weeklyBar").style.width = percent + "%";
     byId("weeklyText").textContent = weeklyCount() + " / " + state.goal + " this week";
     byId("weeklyPercent").textContent = percent + "%";
 
-    byId("badges").innerHTML = badgeDef.map(([name, target]) => {
-      const earned = state.attended.length >= target;
-      return '<div class="badge ' + (earned ? "earned" : "") + '">🏅 ' + escapeHtml(name) + '<br><small>' + (earned ? "Unlocked" : "Locked") + '</small></div>';
-    }).join("");
-
     byId("stepsList").innerHTML = steps.map((s, i) => '<div class="step"><b>Step ' + (i+1) + '</b><p>' + escapeHtml(s) + '</p></div>').join("");
     byId("dailyCard").textContent = recoveryCards[state.dailyCardIndex % recoveryCards.length];
 
     renderCleanSerene();
     checkCleanMilestones();
+    renderTrophyCabinet();
     renderNextBadge();
     renderCalendar();
     renderPlan();

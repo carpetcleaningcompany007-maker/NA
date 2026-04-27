@@ -1,6 +1,6 @@
 {
-  "name": "Recovery Companion",
-  "short_name": "Recovery",
+  "name": "One Day at a Time",
+  "short_name": "One Day",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#eef4ff",

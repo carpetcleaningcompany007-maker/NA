@@ -3,51 +3,55 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Recovery Companion</title>
+  <title>One Day at a Time</title>
   <link rel="stylesheet" href="styles.css">
   <link rel="manifest" href="manifest.json">
 </head>
 <body>
+
 <div id="confetti"></div>
+
 <div id="modal" class="modal hidden">
   <div class="modal-card">
     <div class="modal-icon">🏆</div>
-    <h2 id="modalTitle">Badge unlocked</h2>
-    <p id="modalText">You showed up today.</p>
+    <h2 id="modalTitle">Milestone unlocked</h2>
+    <p id="modalText">One day at a time.</p>
     <button id="closeModal" class="btn primary">Keep going</button>
   </div>
 </div>
 
 <header class="hero">
   <div class="nav">
-    <div class="brand"><span>RC</span><b>Recovery Companion</b></div>
-    <a href="#crisis" class="top-help">Need help?</a>
+    <div class="brand"><span>1</span><b>One Day at a Time</b></div>
+    <a href="#guide" class="top-help">How to use</a>
   </div>
+
   <div class="hero-inner">
-    <p class="chip">NA • AA • Online meetings • Goals • Rewards</p>
-    <h1>One meeting. One day. One win.</h1>
-    <p>A private recovery companion with goals, streaks, badges, celebrations, weekly planning, online meeting backup and support when things feel hard.</p>
+    <p class="chip">Clean time • Meetings • Goals • Trophies • Support</p>
+    <h1>One day at a time. One choice at a time.</h1>
+    <p>A calm, private recovery companion for tracking clean time, planning NA or AA meetings, counting online meetings, earning milestones, and getting help when things feel hard.</p>
     <div class="actions">
       <a class="btn primary" href="#today">Check in today</a>
-      <a class="btn light" href="#meetings">Find meeting</a>
+      <a class="btn light" href="#clean">Set clean date</a>
       <a class="btn red" href="#crisis">I’m struggling</a>
     </div>
   </div>
 </header>
 
 <main>
+
   <section class="stats">
-    <div><strong id="statTotal">0</strong><span>Total meetings</span></div>
+    <div><strong id="statClean">0</strong><span>Clean days</span></div>
+    <div><strong id="statTotal">0</strong><span>Meetings</span></div>
     <div><strong id="statWeek">0</strong><span>This week</span></div>
-    <div><strong id="statStreak">0</strong><span>Day streak</span></div>
     <div><strong id="statLevel">1</strong><span>Level</span></div>
   </section>
 
-  <section class="card clean-card">
+  <section id="clean" class="card clean-card">
     <p class="eyebrow">Clean and serene</p>
     <h2>Your clean time</h2>
     <p id="cleanText" class="clean-display">Set your clean date</p>
-    <label class="date-label">Life changing decision date</label>
+    <label class="date-label">Date you made the life changing decision</label>
     <input type="date" id="cleanDate">
     <p id="cleanMilestone" class="clean-message"></p>
   </section>
@@ -72,16 +76,22 @@
     </div>
 
     <div class="next-badge">
-      <span id="nextBadgeText">Next badge loading...</span>
+      <span id="nextBadgeText">Next trophy loading...</span>
     </div>
 
     <p id="todayMessage" class="message"></p>
   </section>
 
+  <section id="trophies" class="card trophy-card">
+    <p class="eyebrow">Trophy cabinet</p>
+    <h2>Your milestones</h2>
+    <p class="muted">Milestones unlock from clean time and meeting progress. Locked trophies stay visible so the next target is always clear.</p>
+    <div id="trophyCabinet" class="trophy-grid"></div>
+  </section>
+
   <section id="goals" class="card glow-card">
     <p class="eyebrow">Goals</p>
     <h2>Weekly target</h2>
-
     <div class="goal-grid">
       <label>Meetings per week
         <select id="goalCount">
@@ -100,14 +110,7 @@
   </section>
 
   <section class="card">
-    <p class="eyebrow">Rewards</p>
-    <h2>Badges and XP</h2>
-    <p id="xpText" class="muted"></p>
-    <div id="badges" class="badges"></div>
-  </section>
-
-  <section class="card">
-    <p class="eyebrow">Focus</p>
+    <p class="eyebrow">Daily focus</p>
     <h2>Today’s recovery card</h2>
     <div id="dailyCard" class="daily-card"></div>
     <button id="newCardBtn" class="btn soft-blue">New card</button>
@@ -116,7 +119,7 @@
   <section id="meetings" class="card">
     <p class="eyebrow">Meetings</p>
     <h2>Find NA, AA or online meetings</h2>
-    <p class="muted">Always check official sources before travelling. Online meetings count if that is what you can do today.</p>
+    <p class="muted">Always check the official source before travelling. Online meetings count if that is what you can do today.</p>
 
     <div class="finder-grid">
       <a class="finder na" href="https://meetings.ukna.org/" target="_blank" rel="noopener">UK NA Finder<span>Physical and online NA meetings</span></a>
@@ -140,9 +143,8 @@
   </section>
 
   <section id="plan" class="card">
-    <p class="eyebrow">Plan</p>
-    <h2>My weekly meeting plan</h2>
-
+    <p class="eyebrow">Weekly plan</p>
+    <h2>My meeting plan</h2>
     <div class="manual">
       <select id="manualType"><option>NA</option><option>AA</option><option>NA Online</option><option>AA Online</option></select>
       <select id="manualDay"><option>Monday</option><option>Tuesday</option><option>Wednesday</option><option>Thursday</option><option>Friday</option><option>Saturday</option><option>Sunday</option></select>
@@ -150,7 +152,6 @@
       <input id="manualPlace" placeholder="Venue, town, postcode or online link">
       <button type="button" id="addManual" class="btn primary">Add to plan</button>
     </div>
-
     <div id="weekPlan" class="week-plan"></div>
   </section>
 
@@ -163,9 +164,22 @@
   </section>
 
   <section class="card">
-    <p class="eyebrow">Journal</p>
-    <h2>Private reflection history</h2>
+    <p class="eyebrow">Private journal</p>
+    <h2>Reflection history</h2>
     <div id="journalList" class="journal"></div>
+  </section>
+
+  <section id="guide" class="card guide-card">
+    <p class="eyebrow">How to use</p>
+    <h2>Simple daily routine</h2>
+    <div class="guide-grid">
+      <div><b>1</b><h3>Set clean date</h3><p>Enter the day the life changing decision was made. This powers the clean and serene counter and monthly trophies.</p></div>
+      <div><b>2</b><h3>Set weekly goal</h3><p>Choose how many meetings to aim for each week. Online meetings can count if needed.</p></div>
+      <div><b>3</b><h3>Plan meetings</h3><p>Use the NA and AA finders, then add chosen meetings to the weekly plan.</p></div>
+      <div><b>4</b><h3>Check in</h3><p>After a meeting, tap in person or online. The app updates progress, badges, trophies and journal history.</p></div>
+      <div><b>5</b><h3>Use crisis mode</h3><p>If struggling, go straight to the support section for online meetings and helpline options.</p></div>
+      <div><b>6</b><h3>Keep it simple</h3><p>The only real aim is one day at a time. Use the app as a support tool, not as pressure.</p></div>
+    </div>
   </section>
 
   <section class="card">
@@ -193,8 +207,8 @@
 
 <nav class="bottom">
   <a href="#today">Today</a>
-  <a href="#goals">Goals</a>
-  <a href="#meetings">Find</a>
+  <a href="#clean">Clean</a>
+  <a href="#trophies">Trophies</a>
   <a href="#plan">Plan</a>
 </nav>
 
