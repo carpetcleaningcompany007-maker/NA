@@ -525,5 +525,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
   renderLibraryCard();
 
+
+  const openHelpButton = document.getElementById("openHelp");
+  const helpMenu = document.getElementById("helpMenu");
+  if (openHelpButton && helpMenu) {
+    openHelpButton.addEventListener("click", function () {
+      helpMenu.classList.toggle("hidden");
+    });
+  }
+
   render();
 });

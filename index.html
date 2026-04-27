@@ -259,16 +259,84 @@
       <a class="btn primary" href="https://meetings.ukna.org/" target="_blank" rel="noopener">Find NA meeting</a>
       <a class="btn light" href="https://www.alcoholics-anonymous.org.uk/find-a-meeting/" target="_blank" rel="noopener">Find AA meeting</a>
     </div>
-    <p class="helpline">UK NA helpline: <b>0300 999 1212</b>. If someone is in immediate danger, call <b>999</b>.</p>
+    <p class="helpline">NA helpline: <b>0300 999 1212</b><br>AA helpline: <b>0800 917 7650</b><br>If someone is in immediate danger, call <b>999</b>.</p>
   </section>
+
+
+  <section id="support-numbers" class="card support-card">
+    <p class="eyebrow">Support numbers</p>
+    <h2>Useful numbers</h2>
+    <p class="muted">Tap a number to call. Use emergency services if there is immediate danger.</p>
+
+    <div class="support-list">
+      <a href="tel:999" class="support-item urgent-call">
+        <b>Emergency</b>
+        <span>999</span>
+      </a>
+
+      <a href="tel:116123" class="support-item">
+        <b>Samaritans</b>
+        <span>116 123 • 24/7</span>
+      </a>
+
+      <a href="tel:111" class="support-item">
+        <b>NHS Mental Health</b>
+        <span>111</span>
+      </a>
+
+      <a href="sms:85258?body=SHOUT" class="support-item">
+        <b>Shout text support</b>
+        <span>Text SHOUT to 85258</span>
+      </a>
+
+      <a href="tel:03001233393" class="support-item">
+        <b>Mind Infoline</b>
+        <span>0300 123 3393</span>
+      </a>
+
+      <a href="tel:03001236600" class="support-item">
+        <b>FRANK drugs advice</b>
+        <span>0300 123 6600</span>
+      </a>
+
+      <a href="tel:03001231110" class="support-item">
+        <b>Alcohol Change UK</b>
+        <span>0300 123 1110</span>
+      </a>
+
+      <a href="tel:03009991212" class="support-item">
+        <b>NA Helpline</b>
+        <span>0300 999 1212</span>
+      </a>
+
+      <a href="tel:08009177650" class="support-item">
+        <b>AA Helpline</b>
+        <span>0800 917 7650</span>
+      </a>
+    </div>
+  </section>
+
 </main>
 
 <nav class="bottom">
   <a href="#today">Today</a>
   <a href="#clean">Clean</a>
-  <a href="#library">Library</a>
+  <a href="#support-numbers">Help</a>
   <a href="#plan">Plan</a>
 </nav>
+
+
+<div class="floating-help">
+  <div id="helpMenu" class="help-menu hidden">
+    <a href="tel:999">999</a>
+    <a href="tel:03009991212">NA</a>
+    <a href="tel:08009177650">AA</a>
+    <a href="tel:116123">Samaritans</a>
+    <a href="tel:03001236600">FRANK</a>
+  </div>
+  <button id="openHelp" class="help-main" type="button">HELP</button>
+</div>
+
 
 <div id="toast"></div>
 <script src="app.js"></script>

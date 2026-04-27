@@ -39,3 +39,17 @@ Includes:
 
 Note:
 This app links to official sources rather than copying copyrighted daily readings into the app.
+
+
+## Support numbers added
+- Emergency 999
+- Samaritans 116 123
+- NHS 111
+- Shout text support 85258
+- Mind 0300 123 3393
+- FRANK 0300 123 6600
+- Alcohol Change UK 0300 123 1110
+- NA 0300 999 1212
+- AA 0800 917 7650
+
+Also added a floating HELP button in the bottom right with quick call links.
